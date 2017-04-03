@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Editor, EditorState } from 'draft-js';
+import { Editor, EditorState, RichUtils, getVisibleSelectionRect } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import styles from './styles.scss';
 import { getSelection, getSelectionRect } from './utils/selection';
@@ -14,11 +14,28 @@ export default class CustomerEditor extends Component {
       titleEditorState: EditorState.createEmpty(),
       editorState: EditorState.createEmpty(),
       toolbarOpen: false,
-      selectionRect: null
+      selectionRect: null,
+      hasFocus: false
     };
 
     this.titleEditorOnChange = (titleEditorState) => this.setState({ titleEditorState });
     this.onChange = (editorState) => this.setState({ editorState });
+  }
+
+  onFocus() {
+    this.setState({
+      hasFocus: true
+    });
+  }
+
+  onBlur() {
+    this.setState({
+      hasFocus: false
+    });
+  }
+
+  toggleInlineStyle(style) {
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, style));
   }
 
   render() {
@@ -33,8 +50,12 @@ export default class CustomerEditor extends Component {
             onChange={this.titleEditorOnChange}
             placeholder="Title"/>
         </div>
-        <Toolbar {...getToolbarProps(editorState)}/>
-        <Editor 
+        <Toolbar 
+          {...getToolbarProps(this.state)}
+          toggleInlineStyle={this.toggleInlineStyle.bind(this)}/>
+        <Editor
+          onBlur={this.onBlur.bind(this)}
+          onFocus={this.onFocus.bind(this)}
           placeholder="Write here..."
           editorState={editorState}
           onChange={this.onChange}/>
@@ -43,7 +64,7 @@ export default class CustomerEditor extends Component {
   }
 }
 
-function getToolbarProps(editorState) {
+function getToolbarProps({ editorState, hasFocus }) {
   const selectionState = editorState.getSelection();
 
   const toolbarProps = {
@@ -51,7 +72,11 @@ function getToolbarProps(editorState) {
     position: {}
   };
 
-  if(!selectionState.isCollapsed()) {
+  const isCollapsed = selectionState.isCollapsed();
+  const start = selectionState.getStartOffset();
+  const end = selectionState.getEndOffset();
+
+  if(hasFocus && !isCollapsed) {
     const nativeSelection = getSelection(window);
     const selectionRect = getSelectionRect(nativeSelection);
 
