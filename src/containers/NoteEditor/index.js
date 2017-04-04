@@ -2,7 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { TestActions } from '../../actions'
-import Editor from '../Editor';
+import {
+  BrowserRouter as Router,
+  Route,
+  browserHistory
+} from 'react-router-dom';
+import Editor from '../../components/Editor';
 import styles from './styles.scss';
 
 class Ui extends Component {
@@ -11,6 +16,7 @@ class Ui extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { actions, test } = this.props
 
     return (

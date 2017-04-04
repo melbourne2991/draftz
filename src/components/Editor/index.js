@@ -9,8 +9,6 @@ import styles from './styles.scss';
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 
-console.log(inlineToolbarPlugin);
-
 export default class CustomerEditor extends Component {
   constructor(props) {
     super(props);
