@@ -10,7 +10,7 @@ app.use(function(req, res, next) {
 
 app.post('/notes', (req, res) => {
   res.json({
-    id: Math.random().toString().split('.')[1];
+    id: Math.random().toString().split('.')[1]
   });
 });
 

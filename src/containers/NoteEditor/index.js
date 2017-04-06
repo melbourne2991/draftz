@@ -16,7 +16,6 @@ class Ui extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { actions, test } = this.props
 
     return (

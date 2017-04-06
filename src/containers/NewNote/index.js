@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import { NoteActions } from '../../actions';
 
 class NewNote extends Component {
   constructor(props) {
@@ -15,7 +18,7 @@ class NewNote extends Component {
 }
 
 function mapStateToProps(state) {
-  return state.notes
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

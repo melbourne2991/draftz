@@ -12,7 +12,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        App!
+        <Link to="/note/new">New</Link>
         <Route exact path="/" component={Notes}/>
         <Route path="/note/:noteId" component={NoteEditor}/>
         <Route path="/note/new" component={NewNote}/>
