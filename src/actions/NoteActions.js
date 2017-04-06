@@ -1,5 +1,6 @@
 import Rx from 'rxjs';
 import { Notes as NotesAPI } from '../api';
+import history from '../history';
 
 function fetchNewNote() {
   return {
@@ -22,9 +23,11 @@ export function newNoteEpic(action$) {
     .mergeMap(() => {
       return Rx.Observable.from(NotesAPI.newNote())
         .map(response => {
-          return receiveNewNote(response.data);
+          const note = response.data;
+          history.replace(`/note/${note.id}`);
+          return receiveNewNote(note);
         });
-    })
+    });
 }
 
 export const actions = {

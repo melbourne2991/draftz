@@ -13,7 +13,7 @@ class NewNote extends Component {
   }
 
   render() {
-    return null;
+    return <div>New note!</div>
   }
 }
 

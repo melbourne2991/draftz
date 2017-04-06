@@ -3,7 +3,7 @@ import 'rxjs';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { App, Notes, NoteEditor } from './containers';
 import configureStore from './configureStore';
 import history from './history';
@@ -17,9 +17,9 @@ document.body.appendChild(mountPoint);
 
 render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <BrowserRouter history={history}>
       <App/>
-    </ConnectedRouter>
+    </BrowserRouter>
   </Provider>,
   mountPoint)
 
